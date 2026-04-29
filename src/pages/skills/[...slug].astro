@@ -8,6 +8,7 @@ import type { TopicSlug } from "../../data/registry";
 import { registry, type RegistrySkill } from "../../data/registry";
 import SkillContentCard from "../../ui/skill-content-card.astro";
 import Breadcrumbs from "../../ui/breadcrumbs.astro";
+import SkillCard from "../../ui/skill-card.astro";
 import { marked } from "marked";
 
 type SkillFrontmatter = {
@@ -427,25 +428,25 @@ const commandSegments = [
                     {groupTitle}
                   </h1>
                 )}
+                {isTopicGroup && topic?.description ? (
+                  <p class="text-parchment-500 mt-3 text-[15px]">
+                    {topic.description}
+                  </p>
+                ) : null}
               </div>
 
               <div class="grid gap-4 px-4 sm:grid-cols-2 sm:px-0">
                 {children.map((entry) => (
-                  <a
+                  <SkillCard
                     href={skillHref(entry)}
-                    class="hover:border-parchment-300 hover:bg-parchment-100 relative flex flex-col justify-between rounded-[12px] border border-neutral-200 bg-transparent px-6 py-4 transition-colors"
-                  >
-                    <div class="flex flex-col gap-1">
-                      <div class="text-parchment-900 font-[450] tracking-tight">
-                        {entry.pathSlug}
-                      </div>
-                      {entry.description ? (
-                        <div class="text-parchment-500 line-clamp-3 text-[14px] leading-snug">
-                          {entry.description}
-                        </div>
-                      ) : null}
-                    </div>
-                  </a>
+                    slug={entry.slug}
+                    description={entry.description}
+                    ownerLabel={
+                      entry.sourceLabel ??
+                      titleize(entry.sourceKey ?? entry.pathSlug.split("/")[0] ?? "")
+                    }
+                    avatarUrl={`https://github.com/${entry.sourceKey ?? entry.pathSlug.split("/")[0]}.png?size=40`}
+                  />
                 ))}
               </div>
             </>

@@ -11,7 +11,8 @@ export const topics: Topic[] = [
   {
     slug: "accessibility",
     label: "Accessibility",
-    description: "Inclusive UI patterns, WCAG audits, and remediation workflows.",
+    description:
+      "Inclusive UI patterns, WCAG audits, and remediation workflows.",
     isDesignCore: true,
   },
   {
@@ -23,13 +24,15 @@ export const topics: Topic[] = [
   {
     slug: "systems",
     label: "Systems",
-    description: "Design systems, component architecture, and scalable UI foundations.",
+    description:
+      "Design systems, component architecture, and scalable UI foundations.",
     isDesignCore: true,
   },
   {
     slug: "visual",
     label: "Visual",
-    description: "Visual polish, hierarchy, and intentional interface direction.",
+    description:
+      "Visual polish, hierarchy, and intentional interface direction.",
     isDesignCore: true,
   },
   {
@@ -47,13 +50,15 @@ export const topics: Topic[] = [
   {
     slug: "craft",
     label: "Craft",
-    description: "Execution quality, spacing, polish, and production readiness.",
+    description:
+      "Execution quality, spacing, polish, and production readiness.",
     isDesignCore: true,
   },
   {
     slug: "taste",
     label: "Taste",
-    description: "Aesthetic judgment, style direction, and anti-generic UI quality.",
+    description:
+      "Aesthetic judgment, style direction, and anti-generic UI quality.",
     isDesignCore: true,
   },
   {
@@ -71,7 +76,8 @@ export const topics: Topic[] = [
   {
     slug: "3d",
     label: "3D",
-    description: "Spatial interfaces, real-time graphics, and immersive UI scenes.",
+    description:
+      "Spatial interfaces, real-time graphics, and immersive UI scenes.",
     isDesignCore: true,
   },
   {
@@ -83,7 +89,8 @@ export const topics: Topic[] = [
   {
     slug: "architecture",
     label: "Architecture",
-    description: "Project structure, composition patterns, and scalable code design.",
+    description:
+      "Project structure, composition patterns, and scalable code design.",
     isDesignCore: false,
   },
   {
@@ -95,19 +102,22 @@ export const topics: Topic[] = [
   {
     slug: "tooling",
     label: "Tooling",
-    description: "Build systems, CLI workflows, and developer productivity tools.",
+    description:
+      "Build systems, CLI workflows, and developer productivity tools.",
     isDesignCore: false,
   },
   {
     slug: "video",
     label: "Video",
-    description: "Video composition, storytelling, and timeline-based UI content.",
+    description:
+      "Video composition, storytelling, and timeline-based UI content.",
     isDesignCore: false,
   },
   {
     slug: "nextjs",
     label: "Next.js",
-    description: "Next.js conventions, performance, caching, and upgrade guidance.",
+    description:
+      "Next.js conventions, performance, caching, and upgrade guidance.",
     isDesignCore: false,
   },
   {
@@ -119,31 +129,36 @@ export const topics: Topic[] = [
   {
     slug: "vue",
     label: "Vue",
-    description: "Vue component patterns, reactivity, and ecosystem best practices.",
+    description:
+      "Vue component patterns, reactivity, and ecosystem best practices.",
     isDesignCore: false,
   },
   {
     slug: "react-native",
     label: "React Native",
-    description: "Mobile app performance, profiling, and React Native optimization.",
+    description:
+      "Mobile app performance, profiling, and React Native optimization.",
     isDesignCore: false,
   },
   {
     slug: "threejs",
     label: "Three.js",
-    description: "Three.js workflows for rendering, materials, interaction, and shaders.",
+    description:
+      "Three.js workflows for rendering, materials, interaction, and shaders.",
     isDesignCore: false,
   },
   {
     slug: "remotion",
     label: "Remotion",
-    description: "React-driven video generation, animation, and composition workflows.",
+    description:
+      "React-driven video generation, animation, and composition workflows.",
     isDesignCore: false,
   },
   {
     slug: "swiftui",
     label: "SwiftUI",
-    description: "SwiftUI interface patterns, composition, and architecture guidance.",
+    description:
+      "SwiftUI interface patterns, composition, and architecture guidance.",
     isDesignCore: false,
   },
   {
