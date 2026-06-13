@@ -12,40 +12,6 @@ if command -v readlink >/dev/null 2>&1; then
   done
 fi
 
-SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")/.." && pwd)"
-INSTALLER="$SCRIPT_DIR/install.sh"
+SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
 
-if [ ! -f "$INSTALLER" ]; then
-  echo "Error: installer script not found at $INSTALLER" >&2
-  exit 1
-fi
-
-COMMAND="${1:-add}"
-
-case "$COMMAND" in
-  add)
-    shift || true
-    UI_SKILLS_COMMAND="ui-skills" UI_SKILLS_SUBCOMMAND="add" sh "$INSTALLER" "$@"
-    ;;
-  install)
-    shift || true
-    UI_SKILLS_COMMAND="ui-skills" UI_SKILLS_SUBCOMMAND="install" sh "$INSTALLER" "$@"
-    ;;
-  --help|-h|help)
-    cat <<'EOF'
-Usage:
-  ui-skills add [--all|<skill>|"<skill1 skill2 ...>"]
-  ui-skills install [--all|<skill>|"<skill1 skill2 ...>"]
-
-Examples:
-  ui-skills add --all
-  ui-skills add baseline-ui
-  ui-skills add "frontend-design ui-ux-pro-max"
-EOF
-    ;;
-  *)
-    echo "Unknown subcommand: $COMMAND" >&2
-    echo "Run 'ui-skills --help' for usage." >&2
-    exit 1
-    ;;
-esac
+exec node --experimental-strip-types "$SCRIPT_DIR/ui-skills.ts" "$@"

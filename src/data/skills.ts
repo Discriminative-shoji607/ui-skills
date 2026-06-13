@@ -1,4 +1,4 @@
-import { registry, type TopicSlug } from "./registry";
+import { registry, type TopicSlug } from "./registry.ts";
 
 export type Skill = {
   slug: string;

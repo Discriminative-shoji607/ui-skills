@@ -1,4 +1,4 @@
-import type { TopicSlug } from "./registry";
+import type { TopicSlug } from "./registry.ts";
 
 export type Topic = {
   slug: TopicSlug;
