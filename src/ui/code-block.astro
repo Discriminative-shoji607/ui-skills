@@ -6,6 +6,8 @@ type Props = {
   copyContent?: string;
   align?: "start" | "center";
   truncate?: boolean;
+  wrapOnMobile?: boolean;
+  mobileSurface?: boolean;
   className?: string;
   id?: string;
 };
@@ -15,6 +17,8 @@ const {
   copyContent,
   align = "start",
   truncate = false,
+  wrapOnMobile = false,
+  mobileSurface = false,
   className = "",
   id,
 } = Astro.props as Props;
@@ -24,12 +28,17 @@ const content =
 const alignClass = align === "center" ? "items-center" : "items-start";
 const preClass = truncate
   ? "m-0 min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap pr-3 font-mono text-[15px] leading-6"
-  : "m-0 font-mono text-[15px] leading-6";
+  : wrapOnMobile
+    ? "m-0 min-w-0 flex-1 whitespace-pre-wrap break-words pr-3 font-mono text-[15px] leading-6 sm:whitespace-nowrap"
+    : "m-0 min-w-0 flex-1 font-mono text-[15px] leading-6";
+const shellClass = mobileSurface
+  ? "relative flex justify-between rounded-[8px] border-none bg-white py-3.5 pr-4 pl-6 shadow-2xs ring-1 ring-black/10"
+  : "relative flex justify-between rounded-none border-t border-b border-neutral-200 bg-white py-3.5 pr-4 pl-6 shadow-2xs sm:rounded-[8px] sm:border-none sm:ring-1 sm:ring-black/10";
 ---
 
 <div
   id={id}
-  class={`relative flex justify-between rounded-none border-t border-b border-neutral-200 bg-white py-3.5 pr-4 pl-6 shadow-2xs sm:rounded-[8px] sm:border-none sm:ring-1 sm:ring-black/10 ${alignClass} ${className}`}
+  class={`${shellClass} ${alignClass} ${className}`}
 >
   <pre class={preClass}><code>{lines.map((line, lineIndex) => (
     <>
