@@ -41,17 +41,6 @@ export function getStaticPaths() {
   const topicGroupPaths = Array.from(
     new Set(skills.flatMap((skill) => skill.topics ?? [])),
   );
-  const legacySingleSkillPaths = Array.from(
-    skills.reduce((acc, skill) => {
-      const matches = skills.filter(
-        (entry: Skill) => entry.slug === skill.slug,
-      );
-      if (matches.length === 1) {
-        acc.add(skill.slug);
-      }
-      return acc;
-    }, new Set<string>()),
-  );
   const groupPaths = Array.from(
     new Set(
       skills.flatMap((skill: Skill) => {
@@ -68,8 +57,23 @@ export function getStaticPaths() {
       }),
     ),
   );
+  const reservedSingleSegmentPaths = new Set([
+    ...topicGroupPaths,
+    ...groupPaths.filter((pathSlug) => !pathSlug.includes("/")),
+  ]);
+  const legacySingleSkillPaths = Array.from(
+    skills.reduce((acc, skill) => {
+      const matches = skills.filter(
+        (entry: Skill) => entry.slug === skill.slug,
+      );
+      if (matches.length === 1 && !reservedSingleSegmentPaths.has(skill.slug)) {
+        acc.add(skill.slug);
+      }
+      return acc;
+    }, new Set<string>()),
+  );
 
-  return [
+  const pathSlugs = [
     ...legacySingleSkillPaths.map((pathSlug) => ({
       params: { slug: pathSlug },
     })),
@@ -86,6 +90,10 @@ export function getStaticPaths() {
       params: { slug: `${skill.sourceKey}/${skill.slug}` },
     })),
   ];
+
+  return Array.from(
+    new Map(pathSlugs.map((entry) => [entry.params.slug, entry])).values(),
+  );
 }
 
 const routeSlug = Astro.params.slug ?? "";
@@ -96,6 +104,10 @@ const bucket = segments[0] ?? "";
 const leaf = segments[segments.length - 1] ?? "";
 const topic = topicBySlug.get(bucket as TopicSlug);
 const isTopicGroup = Boolean(topic) && segments.length === 1;
+const isOwnerGroup =
+  !topic &&
+  segments.length === 1 &&
+  skillList.some((entry: Skill) => entry.sourceKey === bucket);
 const singleSlugMatches =
   segments.length === 1
     ? skillList.filter((entry: Skill) => entry.slug === pathSlug)
@@ -104,7 +116,6 @@ const uniqueSingleSlugMatch =
   singleSlugMatches.length === 1 ? singleSlugMatches[0] : undefined;
 const skill =
   skillList.find((entry: Skill) => entry.pathSlug === pathSlug) ??
-  uniqueSingleSlugMatch ??
   (segments.length === 2
     ? skillList.find(
         (entry: Skill) => entry.sourceKey === bucket && entry.slug === leaf,
@@ -115,11 +126,8 @@ const skill =
         (entry: Skill) =>
           entry.slug === leaf && entry.topics?.includes(bucket as TopicSlug),
       )
-    : undefined);
-
-if (skill && pathSlug !== skill.pathSlug) {
-  return Astro.redirect(`/skills/${skill.pathSlug}`, 301);
-}
+    : undefined) ??
+  (!isOwnerGroup ? uniqueSingleSlugMatch : undefined);
 
 const userChildren =
   !topic && segments.length === 1
@@ -195,19 +203,26 @@ const relatedSkills = skill
       .slice(0, 10)
   : [];
 
-const sortedSkills = [...skillList].sort((a, b) =>
+const globalSkills = [...skillList].sort((a, b) =>
   a.pathSlug.localeCompare(b.pathSlug),
 );
+const ownerScopedSkills = skill
+  ? skillList
+      .filter((entry: Skill) => entry.sourceKey === skill.sourceKey)
+      .sort((a, b) => a.pathSlug.localeCompare(b.pathSlug))
+  : [];
+const navigationSkills =
+  ownerScopedSkills.length > 1 ? ownerScopedSkills : globalSkills;
 const currentSkillIndex = skill
-  ? sortedSkills.findIndex((entry: Skill) => entry.pathSlug === skill.pathSlug)
+  ? navigationSkills.findIndex((entry: Skill) => entry.pathSlug === skill.pathSlug)
   : -1;
 const previousSkill =
-  skill && currentSkillIndex > 0
-    ? sortedSkills[currentSkillIndex - 1]
+  skill && currentSkillIndex >= 0
+    ? navigationSkills[(currentSkillIndex - 1 + navigationSkills.length) % navigationSkills.length]
     : undefined;
 const nextSkill =
-  skill && currentSkillIndex >= 0 && currentSkillIndex < sortedSkills.length - 1
-    ? sortedSkills[currentSkillIndex + 1]
+  skill && currentSkillIndex >= 0
+    ? navigationSkills[(currentSkillIndex + 1) % navigationSkills.length]
     : undefined;
 const previousSkillHref = previousSkill
   ? `/skills/${previousSkill.pathSlug}`
