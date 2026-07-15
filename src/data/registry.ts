@@ -1333,6 +1333,19 @@ const registrySource: RegistrySourceSkill[] = [
       "Run React Doctor to detect regressions in security, performance, correctness, and architecture, with score-based quality checks.",
   },
   {
+    slug: "improve-react",
+    user: "millionco",
+    repo: "react-doctor",
+    rawUrl:
+      "https://raw.githubusercontent.com/millionco/react-doctor/main/skills/improve-react/SKILL.md",
+    githubUrl:
+      "https://github.com/millionco/react-doctor/blob/main/skills/improve-react/SKILL.md",
+    name: "improve-react",
+    topics: ["code-quality", "performance", "architecture", "frontend"],
+    description:
+      "Survey a React codebase using React Doctor's findings, then produce prioritized audits and self-contained implementation plans without modifying source code.",
+  },
+  {
     slug: "rams",
     user: "rams",
     repo: "rams-ai",
