@@ -10,7 +10,6 @@ export const GET: APIRoute = ({ site }) => {
     "Disallow: /llms.txt",
     "Disallow: /skills/*/llms.txt",
     "Disallow: /skills/registry.txt",
-    "Disallow: /install",
     "",
     `Sitemap: ${origin}/sitemap.xml`,
     "",
